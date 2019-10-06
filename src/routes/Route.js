@@ -2,6 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Route, Redirect } from 'react-router-dom';
 
+import AuthLayout from '../pages/_layouts/auth';
+import DefaultLayout from '../pages/_layouts/default';
+
 /**
  * Manages access to routes
  * Routes that are private cannot be accessed if the user is not logged in.
@@ -18,7 +21,7 @@ export default function RouteManager({
   path,
   exact,
 }) {
-  const signed = true;
+  const signed = false;
 
   /** Redirect to error page */
   if (isError) {
@@ -35,8 +38,20 @@ export default function RouteManager({
     return <Redirect to="/dashboard" />;
   }
 
+  const Layout = signed ? DefaultLayout : AuthLayout;
+
   /** Standard redirect */
-  return <Route path={path} exact={exact} component={Component} />;
+  return (
+    <Route
+      path={path}
+      exact={exact}
+      render={props => (
+        <Layout>
+          <Component {...props} />
+        </Layout>
+      )}
+    />
+  );
 }
 
 RouteManager.propTypes = {
