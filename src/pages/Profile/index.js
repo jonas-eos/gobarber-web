@@ -3,5 +3,9 @@ import React from 'react';
 // import { Container } from './styles';
 
 export default function Profile() {
-  return <section />;
+  return (
+    <section>
+      <h1>Profile</h1>
+    </section>
+  );
 }
