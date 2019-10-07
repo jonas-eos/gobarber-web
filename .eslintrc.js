@@ -1,29 +1,36 @@
 module.exports = {
   env: {
     browser: true,
-    es6: true
+    es6: true,
   },
-  extends: ["airbnb", "prettier", "prettier/react"],
+  extends: ['airbnb', 'prettier', 'prettier/react'],
   globals: {
-    Atomics: "readonly",
-    SharedArrayBuffer: "readonly",
-    __DEV__: true
+    Atomics: 'readonly',
+    SharedArrayBuffer: 'readonly',
+    __DEV__: true,
   },
-  parser: "babel-eslint",
+  parser: 'babel-eslint',
   parserOptions: {
     ecmaFeatures: {
-      jsx: true
+      jsx: true,
     },
     ecmaVersion: 2018,
-    sourceType: "module"
+    sourceType: 'module',
   },
-  plugins: ["react", "prettier", "react-hooks"],
+  plugins: ['react', 'prettier', 'react-hooks'],
   rules: {
-    "prettier/prettier": "error",
-    "react/jsx-filename-extension": ["error", { extensions: [".jsx", ".js"] }],
-    "import/prettier-default-export": "off",
-    "no-unused-vars": ["error", { argsIgnorePattern: "^_" }],
-    "react-hooks/rules-of-hooks": "error",
-    "react-hooks/exhaustive-deps": "warn"
-  }
+    'prettier/prettier': 'error',
+    'react/jsx-filename-extension': ['error', { extensions: ['.jsx', '.js'] }],
+    'import/prefer-default-export': 'off',
+    'no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+    'react-hooks/rules-of-hooks': 'error',
+    'react-hooks/exhaustive-deps': 'warn',
+  },
+  settings: {
+    'import/resolver': {
+      'babel-plugin-root-import': {
+        rootPathSuffix: 'src',
+      },
+    },
+  },
 };
