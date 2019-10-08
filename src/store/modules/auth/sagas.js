@@ -12,6 +12,7 @@ import { signInSuccess, signFailure, signUpSuccess } from './actions';
  * dashboard, they must be a provider.
  * The user data are passed through the signInSuccess, passing the user access
  * token and its information that comes from the API.
+ * Token must be assigned in Bearer property in API authorization header
  * @generator @function
  * @param {object} payload
  * @return redirection to dashboard
@@ -31,6 +32,8 @@ export function* signIn({ payload }) {
       toast.error('User is not a provider!');
       return yield put(signFailure());
     }
+
+    api.defaults.headers.Authorization = `Bearer ${token}`;
 
     yield put(signInSuccess(token, user));
   } catch (error) {
@@ -74,7 +77,26 @@ export function* signUp({ payload }) {
   }
 }
 
+/**
+ * Retrieve Active Section Token
+ * The token is retrieved from the default persistent action payload.
+ * The token must be retrieved and feed the API authorization header.
+ * If the section does not exist, it should return nothing to the user.
+ * @function
+ * @param {object} payload
+ */
+export function setToken({ payload }) {
+  if (!payload) return;
+
+  const { token } = payload.auth;
+
+  if (token) {
+    api.defaults.headers.Authorization = `Bearer ${token}`;
+  }
+}
+
 export default all([
+  takeLatest('persist/REHYDRATE', setToken),
   takeLatest('@auth/SIGN_IN_REQUEST', signIn),
   takeLatest('@auth/SIGN_UP_REQUEST', signUp),
 ]);
