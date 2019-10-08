@@ -14,11 +14,18 @@ export function signInSuccess(token, user) {
   };
 }
 
-/** SingUp request action, with name, email and password information */
+/** SignUp request action, with name, email and password information */
 export function signUpRequest(name, email, password) {
   return {
     type: '@auth/SIGN_UP_REQUEST',
     payload: { name, email, password },
+  };
+}
+
+/** SignUp success action */
+export function signUpSuccess() {
+  return {
+    type: '@auth/SIGN_UP_SUCCESS',
   };
 }
 

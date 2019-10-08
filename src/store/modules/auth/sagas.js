@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 import history from '~/services/history';
 import api from '~/services/api';
 
-import { signInSuccess, signFailure } from './actions';
+import { signInSuccess, signFailure, signUpSuccess } from './actions';
 
 /**
  * Performs user authentication.
@@ -42,4 +42,39 @@ export function* signIn({ payload }) {
   return history.push('/dashboard');
 }
 
-export default all([takeLatest('@auth/SIGN_IN_REQUEST', signIn)]);
+/**
+ * Performs user registration.
+ * For the registration to be successful, the user must fill the data correctly,
+ * these rules are validated on the Sign up page, so in this part of the code
+ * all data is already correct.
+ * If the user already exists, they should display an error on the screen for
+ * the user to check their registration information.
+ * @generator @function
+ * @param {object} payload
+ * @return redirection to root page
+ */
+export function* signUp({ payload }) {
+  try {
+    const { name, email, password } = payload;
+
+    yield call(api.post, 'user/create', {
+      name,
+      email,
+      password,
+      provider: true,
+    });
+
+    yield put(signUpSuccess());
+
+    history.push('/');
+  } catch (error) {
+    toast.error('Registration failed, check your informations!');
+
+    yield put(signFailure());
+  }
+}
+
+export default all([
+  takeLatest('@auth/SIGN_IN_REQUEST', signIn),
+  takeLatest('@auth/SIGN_UP_REQUEST', signUp),
+]);
