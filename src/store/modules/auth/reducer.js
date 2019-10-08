@@ -8,18 +8,35 @@ const INITIAL_STATE = {
 };
 
 export default function auth(state = INITIAL_STATE, action) {
-  switch (action.type) {
-    /** Start user section with a token */
-    case '@auth/SIGN_IN_SUCCESS':
-      return produce(state, draft => {
-        const newState = draft;
+  return produce(state, draft => {
+    const newState = draft;
 
+    switch (action.type) {
+      /** Change loading states on request action */
+      case '@auth/SIGN_IN_REQUEST': {
+        newState.loading = true;
+
+        break;
+      }
+
+      /** Start user section with a token */
+      case '@auth/SIGN_IN_SUCCESS': {
         newState.token = action.payload.token;
         newState.signed = true;
-      });
+        newState.loading = false;
 
-    /** Return global state if any other action to auth are requested */
-    default:
-      return state;
-  }
+        break;
+      }
+
+      /** Change loading states on sign failure action */
+      case '@auth/SIGN_FAILURE': {
+        newState.loading = false;
+
+        break;
+      }
+
+      /** Return global state if any other action to auth are requested */
+      default:
+    }
+  });
 }
