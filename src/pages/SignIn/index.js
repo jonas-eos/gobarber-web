@@ -8,6 +8,7 @@ import { signInRequest } from '~/store/modules/auth/actions';
 
 import logo from '~/assets/logo.svg';
 
+/** Validations */
 const schema = Yup.object().shape({
   email: Yup.string()
     .email('Enter a valid email address!')
@@ -18,6 +19,7 @@ const schema = Yup.object().shape({
 export default function SignIn() {
   const dispatch = useDispatch();
 
+  /** Action to submit button on form, call a saga request */
   function handleSubmit({ email, password }) {
     dispatch(signInRequest(email, password));
   }
