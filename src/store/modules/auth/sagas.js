@@ -3,7 +3,7 @@ import { takeLatest, call, put, all } from 'redux-saga/effects';
 import history from '~/services/history';
 import api from '~/services/api';
 
-import { signInSuccess } from './actions';
+import { signInSuccess, signFailure } from './actions';
 
 /**
  * Performs user authentication.
@@ -16,22 +16,26 @@ import { signInSuccess } from './actions';
  * @return redirection to dashboard
  */
 export function* signIn({ payload }) {
-  const { email, password } = payload;
+  try {
+    const { email, password } = payload;
 
-  const response = yield call(api.post, 'sessions', {
-    email,
-    password,
-  });
+    const response = yield call(api.post, 'sessions', {
+      email,
+      password,
+    });
 
-  const { token, user } = response.data;
+    const { token, user } = response.data;
 
-  // TODO steps if user isn't a provider
-  if (!user.provider) {
-    console.tron.error('User is not a provider!'); // eslint-disable-line
-    return 0;
+    // TODO steps if user isn't a provider
+    if (!user.provider) {
+      console.tron.error('User is not a provider!'); // eslint-disable-line
+      return 0;
+    }
+
+    yield put(signInSuccess(token, user));
+  } catch (error) {
+    yield put(signFailure());
   }
-
-  yield put(signInSuccess(token, user));
 
   return history.push('/dashboard');
 }

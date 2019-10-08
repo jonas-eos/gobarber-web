@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Form, Input } from '@rocketseat/unform';
 import * as Yup from 'yup';
@@ -18,6 +18,7 @@ const schema = Yup.object().shape({
 
 export default function SignIn() {
   const dispatch = useDispatch();
+  const loading = useSelector(state => state.auth.loading);
 
   /** Action to submit button on form, call a saga request */
   function handleSubmit({ email, password }) {
@@ -30,7 +31,7 @@ export default function SignIn() {
       <Form schema={schema} onSubmit={handleSubmit}>
         <Input name="email" type="email" placeholder="Your mail address" />
         <Input name="password" type="password" placeholder="Your password" />
-        <button type="submit">Login</button>
+        <button type="submit">{loading ? 'Loading...' : 'Login'}</button>
         <Link to="/register">Create free account</Link>
       </Form>
     </section>
