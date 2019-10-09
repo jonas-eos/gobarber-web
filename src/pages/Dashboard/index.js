@@ -6,8 +6,8 @@ import api from '~/services/api';
 export default function Dashboard() {
   api.get('providers');
   return (
-    <section>
+    <article>
       <h1>Dashboard</h1>
-    </section>
+    </article>
   );
 }
