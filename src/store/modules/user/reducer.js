@@ -6,17 +6,26 @@ const INITIAL_STATE = {
 };
 
 export default function user(state = INITIAL_STATE, action) {
-  switch (action.type) {
-    /** Get user data in case of sign in success  */
-    case '@auth/SIGN_IN_SUCCESS':
-      return produce(state, draft => {
-        const newState = draft;
+  return produce(state, draft => {
+    const newState = draft;
 
+    switch (action.type) {
+      /** Get user data in case of sign in success  */
+      case '@auth/SIGN_IN_SUCCESS': {
         newState.profile = action.payload.user;
-      });
 
-    /** Return global state if any other action to user are requested */
-    default:
-      return state;
-  }
+        break;
+      }
+
+      /** Get user data updated and update global profile state */
+      case '@user/UPDATE_PROFILE_SUCCESS': {
+        newState.profile = action.payload.profile;
+
+        break;
+      }
+
+      /** Return global state if any other action to user are requested */
+      default:
+    }
+  });
 }
