@@ -35,6 +35,20 @@ export default function auth(state = INITIAL_STATE, action) {
         break;
       }
 
+      /** Change loading states on sign up request action */
+      case '@auth/SIGN_UP_REQUEST': {
+        newState.loading = true;
+
+        break;
+      }
+
+      /** CHange loading states if sign is success */
+      case '@auth/SIGN_UP_SUCCESS': {
+        newState.loading = false;
+
+        break;
+      }
+
       /** Return global state if any other action to auth are requested */
       default:
     }

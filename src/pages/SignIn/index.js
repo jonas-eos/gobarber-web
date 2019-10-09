@@ -25,13 +25,18 @@ export default function SignIn() {
     dispatch(signInRequest(email, password));
   }
 
+  /** Login loading effect */
+  function loadingEffect() {
+    return loading ? 'Loading...' : 'Login';
+  }
+
   return (
     <section>
       <img src={logo} alt="GoBarber" />
       <Form schema={schema} onSubmit={handleSubmit}>
         <Input name="email" type="email" placeholder="Your mail address" />
         <Input name="password" type="password" placeholder="Your password" />
-        <button type="submit">{loading ? 'Loading...' : 'Login'}</button>
+        <button type="submit">{loadingEffect()}</button>
         <Link to="/register">Create free account</Link>
       </Form>
     </section>
