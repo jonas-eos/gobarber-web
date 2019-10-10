@@ -62,19 +62,16 @@ export default function AvatarInput() {
     setPreview(url);
   }
 
-  /** Render a preview if exists, or a default avatar */
-  function renderAvatar() {
-    return (
-      preview ||
-      'https://api.adorable.io/avatars/50/abott@adorable.pngCopy%20to%20Clipboard'
-    );
-  }
-
   return (
     <Container>
       <label htmlFor="avatar">
         <picture>
-          <img src={renderAvatar()} alt="" />
+          <img
+            src={
+              preview || 'https://api.adorable.io/avatars/40/abott@adorable.png'
+            }
+            alt="Preview"
+          />
         </picture>
         <input
           type="file"
