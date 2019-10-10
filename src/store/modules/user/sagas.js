@@ -14,10 +14,12 @@ import { updateProfileSuccess, updateProfileFailure } from './actions';
  */
 export function* updateProfile({ payload }) {
   try {
-    const { name, email, ...passwordData } = payload.data;
+    /* eslint camelcase: ["error", {allow: ["avatar_id"]}] */
+    const { name, email, avatar_id, ...passwordData } = payload.data;
     const profile = {
       name,
       email,
+      avatar_id,
       ...(passwordData.oldPassword ? passwordData : {}),
     };
 
