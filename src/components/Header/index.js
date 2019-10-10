@@ -10,6 +10,12 @@ import { Container, Content, Profile } from './styles';
 export default function Header() {
   const profile = useSelector(state => state.user.profile);
 
+  function renderAvatar() {
+    return profile.avatar
+      ? profile.avatar.url
+      : 'https://api.adorable.io/avatars/40/abott@adorable.png';
+  }
+
   return (
     <Container>
       <Content>
@@ -24,13 +30,7 @@ export default function Header() {
               <strong>{profile.name}</strong>
               <Link to="/profile">Profile</Link>
             </div>
-            <img
-              src={
-                profile.avatar.url ||
-                'https://api.adorable.io/avatars/40/abott@adorable.png'
-              }
-              alt="Profile"
-            />
+            <img src={renderAvatar()} alt="Profile" />
           </Profile>
         </aside>
       </Content>

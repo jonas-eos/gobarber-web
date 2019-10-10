@@ -40,7 +40,7 @@ export default function AvatarInput() {
         path: 'dataset.file',
       });
     }
-  }, [ref, registerField]);
+  }, []); // eslint-disable-line
 
   /**
    * The image is sent to the server via the API request.
@@ -62,16 +62,15 @@ export default function AvatarInput() {
     setPreview(url);
   }
 
+  function renderAvatar() {
+    return preview || 'https://api.adorable.io/avatars/40/abott@adorable.png';
+  }
+
   return (
     <Container>
       <label htmlFor="avatar">
         <picture>
-          <img
-            src={
-              preview || 'https://api.adorable.io/avatars/40/abott@adorable.png'
-            }
-            alt="Preview"
-          />
+          <img src={renderAvatar()} alt="Preview" />
         </picture>
         <input
           type="file"
