@@ -24,6 +24,13 @@ export default function user(state = INITIAL_STATE, action) {
         break;
       }
 
+      /** To sign out, the profile state must be nullified */
+      case '@auth/SIGN_OUT': {
+        newState.profile = null;
+
+        break;
+      }
+
       /** Return global state if any other action to user are requested */
       default:
     }

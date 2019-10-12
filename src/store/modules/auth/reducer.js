@@ -42,9 +42,17 @@ export default function auth(state = INITIAL_STATE, action) {
         break;
       }
 
-      /** CHange loading states if sign is success */
+      /** Change loading states if sign is success */
       case '@auth/SIGN_UP_SUCCESS': {
         newState.loading = false;
+
+        break;
+      }
+
+      /** To sign out, the token and signed state must be nullified */
+      case '@auth/SIGN_OUT': {
+        newState.token = null;
+        newState.signed = false;
 
         break;
       }

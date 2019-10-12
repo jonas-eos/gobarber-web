@@ -35,3 +35,10 @@ export function signFailure() {
     type: '@auth/SIGN_FAILURE',
   };
 }
+
+/** Logout action */
+export function signOut() {
+  return {
+    type: '@auth/SIGN_OUT',
+  };
+}
